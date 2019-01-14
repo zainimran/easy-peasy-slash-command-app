@@ -93,7 +93,7 @@ const initHandler = (slashCommand, message, rest) => {
         return;
     }
     const userIdList = userList.map((user) => user.split('|')[0].substr(2));
-    slashCommand.replyPrivate(message, `Munshi initializing ${userList} with ${pointsInt}!`, function () {
+    slashCommand.replyPrivate(message, `Initializing ${userList} with ${pointsInt}!`, function () {
         userIdList.forEach((user_id) => {
             controller.storage.users.get(user_id, function (err, user_data) {
                 if (user_data) {
@@ -130,7 +130,7 @@ const takeHandler = (slashCommand, message, rest) => {
         slashCommand.replyPrivate(message, "Can't take points from yourself!");
         return;
     }
-    slashCommand.replyPublic(message, `Munshi taking ${pointsInt} from ${user}!`, () => {
+    slashCommand.replyPublic(message, `Taking ${pointsInt} from ${user}!`, () => {
         controller.storage.users.get(user_id, (err, user_data) => {
             if (user_data && user_data.points) {
                 controller.storage.users.get(message.user, function (err, caller_data) {
@@ -199,7 +199,7 @@ const commandHandler = (slashCommand, message) => {
     const [command, ...rest] = message.text.split(" ");
     if (command === 'init') initHandler(slashCommand, message, rest);
     else if (command === 'take') takeHandler(slashCommand, message, rest);
-    else if (command === 'leaderboard') leaderBoardHandler(slashCommand, message);
+    else if (command === 'show') leaderBoardHandler(slashCommand, message);
     else slashCommand.replyPrivate(message, "I'm afraid I don't know how to " + command + " yet.");
 };
 
@@ -232,13 +232,13 @@ controller.on('slash_command', function (slashCommand, message) {
             });
 
             break;
-        case '/munshi':
+        case '/board':
             console.time('slash command');
             if (message.text === "" || message.text === "help") {
                 slashCommand.replyPrivate(message,
-                    "Munshi at your service! " +
-                    "Try typing `/munshi take [integer points] @user` to put me to work. " +
-                    "Or type `/munshi leaderboard` to view the leaderboard");
+                    "Leaderboard at your service! " +
+                    "Try typing `/board take [integer points] @user` to put me to work. " +
+                    "Or type `/board show` to view the leaderboard");
                 console.timeEnd('slash command');
             } else {
                 commandHandler(slashCommand, message);
