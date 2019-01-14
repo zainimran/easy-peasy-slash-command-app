@@ -22,13 +22,15 @@
   },
   "homepage": "https://github.com/zainimran/easy-peasy-slash-command-app#readme",
   "engines": {
-    "node": "5.1.1"
+    "node": ">=8.11.4",
+    "npm": "6.4.1"
   },
   "dependencies": {
-    "botkit": "0.0.5",
-    "botkit-storage-mongo": "^1.0.2",
+    "botkit": "^0.7.0",
+    "botkit-storage-mongo": "^1.0.2"
+  },
+  "devDependencies": {
     "eslint": "^5.12.0",
-    "localtunnel": "^1.9.1",
-    "mongodb": "^1.4.39"
+    "localtunnel": "^1.9.1"
   }
 }
