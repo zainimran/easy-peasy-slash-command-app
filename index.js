@@ -140,9 +140,9 @@ const takeHandler = (slashCommand, message, rest) => {
     }
     slashCommand.replyPublic(message, `Taking ${pointsInt} from ${user} for review of ${pr_link}!`, () => {
         controller.storage.users.get(user_id, (err, user_data) => {
-            if (user_data && user_data.points) {
+            if (user_data && typeof user_data.points !== 'undefined') {
                 controller.storage.users.get(message.user, function (err, caller_data) {
-                    if (caller_data && caller_data.points) {
+                    if (caller_data && typeof caller_data.points !== 'undefined') {
                         caller_data.points += pointsInt;
                         controller.storage.users.save({
                             ...caller_data,
