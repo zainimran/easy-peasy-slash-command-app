@@ -43,15 +43,16 @@
 /* Uses the slack button feature to offer a real time bot to multiple teams */
 var Botkit = require('botkit');
 
-if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET || !process.env.PORT || !process.env.VERIFICATION_TOKEN) {
-    console.log('Error: Specify CLIENT_ID, CLIENT_SECRET, VERIFICATION_TOKEN and PORT in environment');
+if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET || !process.env.PORT || !process.env.SIGNING_SECRET) {
+    console.log('Error: Specify CLIENT_ID, CLIENT_SECRET, SIGNING_SECRET and PORT in environment');
     process.exit(1);
 }
 
-var config = {}
+var config = {};
 if (process.env.MONGOLAB_URI) {
     var BotkitStorage = require('botkit-storage-mongo');
     config = {
+        clientSigningSecret: process.env.SIGNING_SECRET,
         debug: true,
         storage: BotkitStorage({mongoUri: process.env.MONGOLAB_URI}),
     };
@@ -206,7 +207,6 @@ const commandHandler = (slashCommand, message) => {
 controller.on('slash_command', function (slashCommand, message) {
 
     console.log(`slash command ${message.command} received`);
-    if (message.token !== process.env.VERIFICATION_TOKEN) return; //just ignore it.
 
     switch (message.command) {
         case "/echo": //handle the `/echo` slash command. We might have others assigned to this app too!
