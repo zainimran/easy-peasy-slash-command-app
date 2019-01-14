@@ -26,7 +26,7 @@
     "npm": "6.4.1"
   },
   "dependencies": {
-    "botkit": "^0.4.2",
+    "botkit": "0.0.5",
     "botkit-storage-mongo": "^1.0.2"
   },
   "devDependencies": {
