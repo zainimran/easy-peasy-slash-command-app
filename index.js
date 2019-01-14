@@ -119,10 +119,18 @@ const initHandler = (slashCommand, message, rest) => {
 };
 
 const takeHandler = (slashCommand, message, rest) => {
-    const [points, user] = rest;
+    const [points, user, pr_link] = rest;
     const pointsInt = parseInt(points, 10);
     if (isNaN(pointsInt)) {
         slashCommand.replyPrivate(message, 'Pass an integer as value for points!');
+        return;
+    }
+    if (!user) {
+        slashCommand.replyPrivate(message, 'Specify someone!');
+        return;
+    }
+    if (!pr_link) {
+        slashCommand.replyPrivate(message, 'Specify the link of the PR that you reviewed!');
         return;
     }
     const user_id = user.split('|')[0].substr(2);
@@ -209,29 +217,6 @@ controller.on('slash_command', function (slashCommand, message) {
     if (message.token !== process.env.VERIFICATION_TOKEN) return; //just ignore it.
 
     switch (message.command) {
-        case "/echo": //handle the `/echo` slash command. We might have others assigned to this app too!
-            // The rules are simple: If there is no text following the command, treat it as though they had requested "help"
-            // Otherwise just echo back to them what they sent us.
-            console.time('slash command');
-
-            // if no text was supplied, treat it as a help command
-            if (message.text === "" || message.text === "help") {
-                slashCommand.replyPrivate(message,
-                    "I echo back what you tell me. " +
-                    "Try typing `/echo hello` to see.");
-                console.timeEnd('slash command');
-                return;
-            }
-
-            // If we made it here, just echo what the user typed back at them
-            slashCommand.replyPublic(message, message.text, function () {
-                console.timeEnd('slash command');
-                slashCommand.replyPublicDelayed(message, message.text, function () {
-                    slashCommand.replyPublicDelayed(message, message.text);
-                });
-            });
-
-            break;
         case '/board':
             console.time('slash command');
             if (message.text === "" || message.text === "help") {
