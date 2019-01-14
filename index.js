@@ -138,7 +138,7 @@ const takeHandler = (slashCommand, message, rest) => {
         slashCommand.replyPrivate(message, "Can't take points from yourself!");
         return;
     }
-    slashCommand.replyPublic(message, `Taking ${pointsInt} from ${user}!`, () => {
+    slashCommand.replyPublic(message, `Taking ${pointsInt} from ${user} for review of ${pr_link}!`, () => {
         controller.storage.users.get(user_id, (err, user_data) => {
             if (user_data && user_data.points) {
                 controller.storage.users.get(message.user, function (err, caller_data) {
