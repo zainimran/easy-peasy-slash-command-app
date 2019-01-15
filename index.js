@@ -184,7 +184,7 @@ const takeHandler = (slashCommand, message, rest) => {
 };
 
 const leaderBoardHandler = (slashCommand, message) => {
-    slashCommand.replyPublic(message, "Fetching leaderboard...", () => {
+    slashCommand.replyPrivate(message, "Fetching leaderboard...", () => {
         controller.storage.users.all((err, all_user_data) => {
             if (err) {
                 console.log(`Error: ${err}`);
@@ -193,7 +193,7 @@ const leaderBoardHandler = (slashCommand, message) => {
             if (all_user_data) {
                 const user_with_points = all_user_data.filter((user) => user.points);
                 if (!user_with_points.length) {
-                    slashCommand.replyPublicDelayed(message, "No leaderboard exists. Contact admin");
+                    slashCommand.replyPrivateDelayed(message, "No leaderboard exists. Contact admin");
                     return;
                 }
                 const user_points = user_with_points.map((user) => ({
@@ -205,7 +205,7 @@ const leaderBoardHandler = (slashCommand, message) => {
                 user_points.forEach((user) => {
                     leaderboard = `${leaderboard}\n${user.name} --> ${user.points}`;
                 });
-                slashCommand.replyPublicDelayed(message, leaderboard);
+                slashCommand.replyPrivateDelayed(message, leaderboard);
             }
         });
     });
