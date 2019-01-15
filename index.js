@@ -86,10 +86,18 @@ controller.setupWebserver(process.env.PORT, function (err, webserver) {
 //
 
 const initHandler = (slashCommand, message, rest) => {
+    if (message.user_id !== process.env.ADMIN_ID) {
+        slashCommand.replyPrivate(message, 'You have to be an admin to initialize users!');
+        return;
+    }
     const [points, ...userList] = rest;
     const pointsInt = parseInt(points, 10);
     if (isNaN(pointsInt)) {
         slashCommand.replyPrivate(message, `Pass an integer as value for points!`);
+        return;
+    }
+    if (!userList) {
+        slashCommand.replyPrivate(message, `Pass username(s) to initialize!`);
         return;
     }
     const userIdList = userList.map((user) => user.split('|')[0].substr(2));
@@ -215,6 +223,10 @@ controller.on('slash_command', function (slashCommand, message) {
 
     console.log(`slash command ${message.command} received`);
     if (message.token !== process.env.VERIFICATION_TOKEN) return; //just ignore it.
+    if (message.channel_id !== process.env.CHANNEL_ID) {
+        slashCommand.replyPrivate(message, 'Can only use this command inside code_reviews private channel!');
+        return;
+    }
 
     switch (message.command) {
         case '/board':
