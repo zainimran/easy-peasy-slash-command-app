@@ -127,14 +127,22 @@ const initHandler = (slashCommand, message, rest) => {
 };
 
 const takeHandler = (slashCommand, message, rest) => {
-    const [points, user, pr_link] = rest;
+    const [points, from, user, _for, pr_link] = rest;
     const pointsInt = parseInt(points, 10);
     if (isNaN(pointsInt)) {
         slashCommand.replyPrivate(message, 'Pass an integer as value for points!');
         return;
     }
+    if (from !== 'from' && from !== 'From' && from !== 'FROM') {
+        slashCommand.replyPrivate(message, 'Incorrect command! Please refer to /board help');
+        return;
+    }
     if (!user) {
         slashCommand.replyPrivate(message, 'Specify someone!');
+        return;
+    }
+    if (_for !== 'for' && _for !== 'For' && _for !== 'FOR') {
+        slashCommand.replyPrivate(message, 'Incorrect command! Please refer to /board help');
         return;
     }
     if (!pr_link) {
