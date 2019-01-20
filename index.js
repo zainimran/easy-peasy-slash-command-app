@@ -242,7 +242,7 @@ controller.on('slash_command', function (slashCommand, message) {
             if (message.text === "" || message.text === "help") {
                 slashCommand.replyPrivate(message,
                     "Leaderboard at your service! " +
-                    "Try typing `/board take [integer points] @user [PR link]` to put me to work. " +
+                    "Try typing `/board take [integer points] from @user for [PR link]` to put me to work. " +
                     "Or type `/board show` to view the leaderboard");
                 console.timeEnd('slash command');
             } else {
