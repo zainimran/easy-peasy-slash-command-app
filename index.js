@@ -154,7 +154,7 @@ const takeHandler = (slashCommand, message, rest) => {
         slashCommand.replyPrivate(message, "Can't take points from yourself!");
         return;
     }
-    slashCommand.replyPublic(message, `Taking ${pointsInt} from ${user} for review of ${pr_link}!`, () => {
+    slashCommand.replyPublic(message, `<@${message.user}> took ${pointsInt} from ${user} for review of ${pr_link}!`, () => {
         controller.storage.users.get(user_id, (err, user_data) => {
             if (user_data && typeof user_data.points !== 'undefined') {
                 controller.storage.users.get(message.user, function (err, caller_data) {
