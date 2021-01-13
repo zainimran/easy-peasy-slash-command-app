@@ -1,4 +1,2 @@
-# easy-peasy-slash-command-app
-A template project to get you started writing Slack slash commands using Botkit
-
-Follow along with [Easy Peasy Slash Commands](https://medium.com/slack-developer-blog/easy-peasy-slash-commands-getting-started-c37ff3f14d3e#.nfr4px2vi)
+# Pull Request Currency 
+Slack slash commands to manage pull request currency in a small team. Teams can start with a fixed number of fungible tokens. These tokens can be exchanged with other team members in exchange for their code review on your PR. This may help teams to encourage team work when it comes to reviewing each other's PRs.
